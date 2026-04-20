@@ -1,20 +1,22 @@
-name: Hello World Training Workflow
+import sys
+from utils import is_prime
 
-on:
-  workflow_dispatch:
-  issues:
-    types: [opened, edited]
+def main():
+    if len(sys.argv) != 2:
+        print("Uso: python main.py <número>")
+        sys.exit(1)
 
-jobs:
-  greet:
-    env:
-      MY_ENV: "John Doe"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Greet the User
-        run: echo "Hello World!"
-      - name: Run a multi-line script
-        run: |
-          echo "Hello $MY_ENV"
-          echo "Hello $GITHUB_ACTOR"
+    try:
+        numero = int(sys.argv[1])
 
+        if is_prime(numero):
+            print(f"O número '{numero}' é primo.")
+        else:
+            print(f"O número '{numero}' NON é primo.")
+
+    except ValueError:
+        print("Non é un número válido")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
